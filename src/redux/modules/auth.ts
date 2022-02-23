@@ -1,18 +1,13 @@
 
 import { push } from "connected-react-router";
 import { Action, createActions, handleActions } from "redux-actions";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import TokenService from "../../serives/TokenService";
 import UserService from "../../serives/UserService";
-import { LoginReqType } from "../../types";
+import AuthState, { LoginReqType } from "../../types";
 
 //인증 관리 
 
-interface AuthState {
-    token : string | null;
-    loading : boolean;
-    error : Error | null;
-}
 
 const initialState : AuthState = {
     token : null,
@@ -57,6 +52,19 @@ function* loginSaga(action:Action<LoginReqType>) {
 }
 
 function* logoutSaga() {
+    try{
+        yield put(pending());
+        const token:string = yield select(state => state.auth.token);
+        yield call(UserService.logout, token);
+        //localstorage
+        TokenService.set(token);
+        yield put(success(token));
+    }catch(error:any) {
+        
+    } finally {
+        TokenService.remove();
+        yield put(success(null));
+    }
 
 }
 
