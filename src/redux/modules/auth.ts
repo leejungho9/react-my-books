@@ -44,7 +44,7 @@ function* loginSaga(action:Action<LoginReqType>) {
         yield put(success(token));
         //push
         yield put(push("/"));
-    }catch(error:any) {
+    }catch(error : any) {
         yield put(fail(new Error(error?.response?.data?.error || 'UNKNOWN_ERROR')))
 
     }
