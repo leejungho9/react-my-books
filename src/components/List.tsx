@@ -1,21 +1,24 @@
 import { PageHeader, Table, Button } from "antd"
-import { useCallback, useEffect } from "react";
-import { BookType } from "../types";
+import {  useEffect } from "react";
+import { BookResType } from "../types";
 import Book from "./Book";
 import Layout from "./Layout"
 import styles from "./List.module.css";
 
 
-interface ListProps {
-    books : BookType[] | null ;
+interface BooksProp {
+    books : BookResType[] | null ;
     loading : boolean;
     error : Error | null;
     getBooks : () => void;
     logout : () => void;
     goAdd : () => void;
     deleteBook : (bookId : number) => void;
+    editBook : (bookId : number) => void;
 }
-const List : React.FC <ListProps> = ({books, loading, getBooks, error, logout, goAdd, deleteBook})=>{
+const Books : React.FC<BooksProp> = ({
+    books, loading, getBooks, error, logout, goAdd, deleteBook, editBook})=>{
+    
     useEffect(()=> {
         getBooks();
     }, [getBooks]);
@@ -40,7 +43,7 @@ const List : React.FC <ListProps> = ({books, loading, getBooks, error, logout, g
             { title : 'Book',
                 dataIndex : 'book',
                 key : 'book',
-                render : (text, record) => <Book {...record} deleteBook={deleteBook} />
+                render : (text, record) => <Book {...record} deleteBook={deleteBook} editBook={editBook}/>
             },
             ]}
             
@@ -53,9 +56,6 @@ const List : React.FC <ListProps> = ({books, loading, getBooks, error, logout, g
         </Layout>       
     );
 
-    function click() {
-      
-    };
 };
 
-export default List;
+export default Books;

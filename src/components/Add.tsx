@@ -5,17 +5,20 @@ import Layout from "./Layout"
 import styles from "./Add.module.css";
 import { useRef } from "react";
 import TextAreaType from 'rc-textarea';
-import { BookReqType } from "../types";
+import { BookReqType, BookResType } from "../types";
 
 
 
 interface AddProps {
-    loading : boolean;
-    back : () => void;
-    logout : () => void;
-    add : (book : BookReqType) => void;
+ books: BookResType[] | null;
+  loading: boolean;
+  error: Error | null;
+  add: (book: BookReqType) => void;
+  back: () => void;
+  getBooks: () => void;
+  logout: () => void;
 }
-const Add : React.FC <AddProps> = ({loading, back, logout, add}) => {
+const Add : React.FC <AddProps> = ({books, error, getBooks, loading, back, logout, add}) => {
     const titleRef = useRef<Input>(null);
     const messageRef = useRef<TextAreaType>(null);
     const authorRef = useRef<Input>(null);
@@ -85,7 +88,6 @@ const Add : React.FC <AddProps> = ({loading, back, logout, add}) => {
             const message = messageRef.current!.resizableTextArea.props.value as string;
             const author = authorRef.current!.state.value;
             const url = urlRef.current!.state.value;
-
             if(title === undefined || message === undefined || author === undefined || url === undefined){
                 messageDialog.error('Please fill out all inputs');
                 return;

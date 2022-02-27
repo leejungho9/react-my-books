@@ -4,8 +4,16 @@ import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 import TokenService from "../../serives/TokenService";
 import UserService from "../../serives/UserService";
-import AuthState, { LoginReqType } from "../../types";
+import  { LoginReqType } from "../../types";
 
+
+export  interface AuthState {
+    token : string | null;
+    loading : boolean;
+    error : Error | null;
+}
+
+  
 //인증 관리 
 
 

@@ -1,22 +1,27 @@
 import { Link } from "react-router-dom";
 import {BookOutlined, DeleteOutlined, EditOutlined, HomeOutlined} from '@ant-design/icons';
-import { BookType } from "../types";
 import moment from "moment";
 import { Button, Tooltip } from "antd";
 import styles from "./Book.module.css";
 
-interface BookProps extends BookType {
-    deleteBook : (bookId : number) => void
+interface BookProps {
+  bookId: number;
+  title: string;
+  author: string;
+  url: string;
+  createdAt: string;
+  deleteBook: (bookId: number) => void;
+  editBook: (bookId: number) => void;
 }
 
-
-const Book : React.FC<BookProps> = ({
+const Book : React.FC<BookProps> =  ({
     bookId, 
     title, 
     author, 
     createdAt, 
     url,
     deleteBook,
+    editBook
     }) => { return (
     <div className={styles.book}>
         <div className={styles.title}>
@@ -39,7 +44,7 @@ const Book : React.FC<BookProps> = ({
                 </a>
             </Tooltip>
             <Tooltip title ='Edit'>
-                    <Button size="small" shape="circle" icon={<EditOutlined/>} className={styles.button_edit}/>
+                    <Button size="small" shape="circle" icon={<EditOutlined/>} className={styles.button_edit} onClick={clickEdit}/>
             </Tooltip>
             <Tooltip title = 'Delete'>
                     <Button size="small" type="primary" shape="circle" danger icon={<DeleteOutlined/>}  onClick= {clickDelete} className={styles.button_delete}/>
@@ -49,6 +54,9 @@ const Book : React.FC<BookProps> = ({
     );
     function clickDelete() {
         deleteBook(bookId);
+    }
+    function clickEdit() {
+        editBook(bookId);
     }
 };
 

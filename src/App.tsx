@@ -1,7 +1,7 @@
-import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+import { ErrorBoundary } from 'react-error-boundary';
 import history from './history';
 import Add from './pages/Add';
 import Detail from './pages/Detail';
@@ -11,20 +11,20 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Signin from './pages/Signin';
 
-function App() {
+const App = () => {
   return (
-<ErrorBoundary FallbackComponent={Error}>
-  <ConnectedRouter history={history}>
+    <ErrorBoundary FallbackComponent={Error}>
+    <ConnectedRouter history={history}>
       <Switch>
-        <Route  path="/edit/:id" component={Edit} />
-        <Route  path="/book/:id" component={Detail} />
-        <Route  path="/add"  component={Add}/>
-        <Route  path="/signin"  component={Signin}/>
-        <Route  path="/" component={Home}/>
-        <Route  path ="*"  component={NotFound}/>
+        <Route exact path="/edit/:id" component={Edit} />
+        <Route exact path="/book/:id" component={Detail} />
+        <Route exact path="/signin" component={Signin} />
+        <Route exact path="/add" component={Add} />
+        <Route exact path="/" component={Home} />
+        <Route component={NotFound} />
       </Switch>
-  </ConnectedRouter>
-</ErrorBoundary>
+    </ConnectedRouter>
+  </ErrorBoundary>
   )
 }
 
