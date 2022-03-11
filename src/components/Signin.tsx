@@ -11,7 +11,7 @@ interface SigninProps {
 const Signin: React.FC<SigninProps>= ({login}) => {
     const emailRef = useRef<Input>(null);
     const passwordRef = useRef<Input>(null);
-    console.log(emailRef , passwordRef)
+    
     return (
         <Row align="middle" className={styles.signin_row}>
             <Col span={24}>
@@ -61,8 +61,7 @@ const Signin: React.FC<SigninProps>= ({login}) => {
         const email = emailRef.current!.state.value;
         const password = passwordRef.current!.state.value;
         login({email , password});
-        console.log(email);
-        console.log(password);
+        console.log(login)
     }
 }
 
